@@ -1,0 +1,54 @@
+#%RAML 1.0 DataType
+type: object
+displayName: Key object
+properties:
+  id:
+    type: string
+    required: false
+    description: Object id
+
+  name:
+    type: string
+    required: true
+    description: Key name
+
+  key_size:
+    type: number
+    required: true
+    description: Key size
+
+  key_type:
+    type: string
+    required: true
+    description: Key type
+
+  user_id:
+    type: string
+    required: false
+    description: Key user id
+
+  use:
+    type: string
+    enum: ["General", "Certificate"]
+    required: false
+    description: Key usage
+
+  enabled:
+    type: boolean
+    required: false
+    description: Determines whether the object is enabled
+
+  created:
+    type: datetime
+    required: false
+    description: Creation time
+
+  key_ops:
+    type: array
+    required: false
+    description: Key operations
+
+  public_key:
+    type: string
+    required: false
+    description: Public key

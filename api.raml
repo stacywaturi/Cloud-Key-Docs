@@ -1,0 +1,265 @@
+#%RAML 1.0
+title: Cloud Key
+version: v1
+baseUri: http://api.samplehost.com
+
+types:
+  Key: !include types/key.raml
+  Certificate: !include types/certificate.raml
+
+/keys:
+  get:
+    description: Get Keys List
+    responses:
+      200:
+        body:
+          application/json:
+            type: Key
+            example:
+              name: "key1"
+              enabled: bool(false)
+              created: "2021-01-31 10:20:10"
+
+
+
+  post:
+    description: Create key
+    body:
+      application/json:
+        type: Key
+        example:
+          name: "key09012019"
+          key_type: "RSA"
+          key_size: 2048
+    responses:
+      201:
+        body:
+          application/json:
+            example: |
+              {
+                "message":"Key 'key09012019' successfully created"
+              }
+      400:
+        body:
+          application/json:
+            example: |
+              {
+                "message":"Key could not be created. Kindly provide valid key parameters"
+              }
+
+
+
+  /{id}:
+    get:
+      description: Get particular key using id
+      responses:
+        200:
+          body:
+            application/json:
+              type: Key
+              example:
+                name: "key12"
+                key_type: "RSA"
+                key_ops: "encrypt, decrypt, sign, verify"
+                public_key: "5KTQtnpzfzBfPyGsfMNg3akeqYDNe1ztC62Mfh..."
+        404:
+          body:
+            application/json:
+              example: |
+                {
+                  "message":Key not found
+                }
+
+
+    delete:
+      description: Delete particular key
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "message": Key succesfully deleted
+                }
+        403:
+          body:
+            application/json:
+              example: |
+                {
+                  "message": Operation not allowed
+                }
+
+
+    put:
+      description: Update key
+      body:
+        application/json:
+          type: Key
+
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "message": Key succesfully updated
+                }
+        403:
+          body:
+            application/json:
+              example: |
+                {
+                  "message": Operation not allowed
+                }
+
+
+
+  /sign:
+    post:
+      description: Sign using key
+      body:
+        application/json:
+          type: Key
+          example: |
+          {
+            "name": "key08112018"
+            "algorithm": "SHA256"
+            "hash": "jfuhIGWSYGilfyeg65sftswkiop...."
+          }
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "message":"Signature created using '<key-name>'"
+                  "signature": "nB3Wt2AA96B08l8b6ewoDDyAPEf57Cr_k..."
+                }
+        400:
+          body:
+            application/json:
+              example: |
+                {
+                  "message":"Signature could not be created. Invalid signing algorithm"
+                }
+
+
+
+
+/certificates:
+  get:
+    description: Get Certificate List
+    responses:
+      200:
+        body:
+          application/json:
+            type: Certificate
+            example:
+              name: "cert09012019"
+              created_at: "2019-01-31 10:20:10"
+              common_name: "domainname.com"
+              issuer: "iSolv Technologies"
+              serial_number: "1015"
+              expiry: "2021-01-31 10:20:10"
+
+
+  post:
+    description: Create certificate
+    body:
+      application/json:
+        type: Certificate
+        example:
+          name: "certificate1"
+          email: "email@info.com"
+          common_name: "certificate1.com"
+          organization: "Example Org"
+          organization_unit: "R&D"
+          country: "ZA"
+          state: "Gauteng"
+          key_type: "RSA"
+          key_size: 2048
+
+    responses:
+      202:
+        body:
+          application/json:
+            example: |
+              {
+                "message":"Certficate Request Successful. Please perform a merge to complete this certificate request."
+              }
+      409:
+        body:
+          application/json:
+            example: |
+            {
+              "message": "A new certificate can not be created or imported while a pending key vault certificate's status is with the same name is in progress."
+            }
+      400:
+        body:
+          application/json:
+            example: |
+              {
+                "message":"Certificate could not be created. Kindly provide valid certificate parameters"
+              }
+  /{id}:
+    get:
+      description: Get particular certificate using id
+      responses:
+        200:
+          body:
+            application/json:
+              type: Certificate
+              example:
+                name: "cert09012019"
+                csr: "MIIC4TCCAckCAQAwUTEJMAcGA1UECBMAMQ.."
+                certificate: "MIID/zCCAecCAhAVMA0GCSqGSIb3D..."
+                created_at: "2019-01-31 10:20:10"
+                issuer: "C=ZA, ST=Gauteng, O=iSolv Technologies, CN=isolvtech.com, E=info@isolvtech.com"
+                serial_number: "1015"
+                expiry: "2021-01-31 10:20:10"
+
+        404:
+          body:
+            application/json:
+              example: |
+                {
+                  "message":Certificate not found
+                }
+    delete:
+      description: Delete particular certificate
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "message": Certificate succesfully deleted
+                }
+        403:
+          body:
+            application/json:
+              example: |
+                {
+                  "message": Operation not allowed
+                }
+    put:
+      description: Update certificate
+      body:
+        application/json:
+          type: Certificate
+
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "message": Certificate succesfully updated
+                }
+        403:
+          body:
+            application/json:
+              example: |
+                {
+                  "message": Operation not allowed
+                }

@@ -1,0 +1,100 @@
+#%RAML 1.0 DataType
+type: object
+displayName: Certificate object
+properties:
+  id:
+    type: string
+    required: false
+    description: Object id
+
+  name:
+    type: string
+    required: true
+    description: Certificate name
+
+  email:
+    type: string
+    required: true
+    description: Certificate Subject's Email
+
+  common_name:
+    type: string
+    required: false
+    description: Certificate Subkect's Common Name
+
+  organization: 
+    type: string
+    required: false
+    description: Certificate Subject's Organization
+
+  organization_unit:
+    type: string
+    required: false
+    description: Certificate Subject's Organization Unit
+
+  country:
+    type: string
+    required: false
+    description: Certificate Subject's Country
+
+  state:
+    type: string
+    required: false
+    description: Certificate Subject's Country
+
+  key_size:
+    type: number
+    required: true
+    description: Key size
+
+  key_type:
+    type: string
+    required: true
+    description: Key type
+
+
+
+  key_id:
+    type: string
+    required: true
+    description: Certificate Key ID
+
+  user_id:
+    type: string
+    required: true
+    description: Certificate User ID
+
+  csr:
+    type: string
+    required: false
+    description: Certificate Signing Request
+
+  certificate:
+    type: string
+    required: false
+    description: Certificate (Raw)
+
+  previous_id:
+    type: string
+    required: false
+    description: Certificate Parent ID
+
+  created_at:
+    type: datetime
+    required: false
+    description: Certificate Date and time created
+
+  expiry:
+    type: datetime
+    required: false
+    description: Certificate Expiry date
+
+  serial_number:
+    type: string
+    required: false
+    description: Certificate Serial Number
+
+  issuer:
+    type: string
+    required: false
+    description: Certificate issuer
